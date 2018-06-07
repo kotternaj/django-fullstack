@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.urlresolvers import reverse
 
 class School(models.Model):
     name = models.CharField(max_length=256)
