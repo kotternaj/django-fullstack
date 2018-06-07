@@ -1,0 +1,21 @@
+{% extends 'basic_app/basic_app_base.html' %}
+
+{% block body_block %}
+
+<div='jumbotron'>
+    <h2>School details:</h2>
+    <p>Name: {{ school_detaily.name }}</p>
+    <p>Principal: {{ school_detaily.principal }}</p>
+    <p>Location: {{ school_detaily.location }}</p>
+    <h3>Students:</h3>
+
+    {% for student in school_detaily.students.all %}  
+    <p>{{student.name}} who is {{student.age}} years old</p>  
+    {% endfor %}
+</div>
+
+
+{% endblock %}
+
+
+<!-- # note: students in students.all is a ref to here: school = models.ForeignKey(School,related_name='students') -->
