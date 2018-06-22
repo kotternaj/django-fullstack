@@ -9,7 +9,7 @@ class Item(Resource):
         required=True,
         help="This field cannot be left blank")
             
-    @jwt_required()
+    # @jwt_required()
     def get(self,name):
         item = self.find_by_name(name)
         if item:
@@ -46,8 +46,12 @@ class Item(Resource):
         return item, 201
     
     def delete(self,name):
-        global items 
-        item = list(filter(lambda x: x['name'] !=name, items))
+        connection = sqlite3.connect('data.db')
+        cursor = connection.cursor()
+
+        query = "DELETE FROM items WHERE name=?"
+        cursor.execute(query, (name,))
+
         return {'message': 'Item deleted'}
 
     def put(self,name):    
