@@ -34,9 +34,9 @@ class Item(Resource):
     
   
     def delete(self,name):
-        item = Item.find_by_name(name)
+        item = ItemModel.find_by_name(name)
         if item:
-            delete_from_db()
+            item.delete_from_db()
         
         return {'message': 'Item has been deleted'}
 
