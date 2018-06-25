@@ -10,7 +10,7 @@ class Item(Resource):
         required=True,
         help="This field cannot be left blank")
             
-    # @jwt_required()
+    @jwt_required()
     def get(self,name):
         item = ItemModel.find_by_name(name)
         if item:
@@ -18,15 +18,15 @@ class Item(Resource):
         return {'message': 'Item not found'},404    
     
     def post(self,name):
-        if Item.find_by_name(name):  # or self.find_by_name
+        if ItemModel.find_by_name(name):  # or self.find_by_name
             return {'message': 'An item with this name {} already exists'.format(name)},400
 
         data = Item.parser.parse_args()
 
-        item = ItemModel(name, data['price']}
+        item = ItemModel(name, data['price'])
 
         try:
-            item.insert()
+            ItemModel.insert(item)
         except:
             return {'message': 'An error occured inserting the item.'}, 500
         
@@ -60,7 +60,7 @@ class Item(Resource):
             try:
                 updated_item.update()
             except:
-                return {'message': 'An error occured inserting the item'}, 500                
+                return {'message': 'An error occured updating the item'}, 500                
         return updated_item.json()
     
 
